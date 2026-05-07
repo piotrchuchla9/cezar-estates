@@ -5,6 +5,7 @@ import About from '~/components/astro/About.astro';
 import ProjectsGrid from '~/components/astro/ProjectsGrid.astro';
 import Process from '~/components/astro/Process.astro';
 import InProgressGrid from '~/components/astro/InProgressGrid.astro';
+import ContactSection from '~/components/astro/ContactSection.astro';
 import { getCompletedProjects, getInProgressEntries, getSiteSettings } from '~/lib/contentful';
 
 const [settings, projects, inProgress] = await Promise.all([
@@ -33,4 +34,5 @@ const [settings, projects, inProgress] = await Promise.all([
   </section>
   <Process settings={settings} />
   <InProgressGrid entries={inProgress} variant="teaser" />
+  <ContactSection settings={settings} />
 </Base>
