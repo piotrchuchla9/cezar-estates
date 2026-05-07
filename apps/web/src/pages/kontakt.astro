@@ -1,0 +1,13 @@
+---
+import Base from '~/layouts/Base.astro';
+import ContactSection from '~/components/astro/ContactSection.astro';
+import { getSiteSettings } from '~/lib/contentful';
+
+const settings = await getSiteSettings();
+---
+<Base seo={{
+  title: 'Kontakt',
+  description: 'Skontaktuj się z Cezar Estates — Ewa Korgól, Kraków. +48 505 455 811.'
+}}>
+  <ContactSection settings={settings} />
+</Base>
