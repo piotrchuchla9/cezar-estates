@@ -36,6 +36,7 @@ const jsonLd = organizationJsonLd(
     <meta name="twitter:card" content="summary_large_image" />
     {meta.noindex && <meta name="robots" content="noindex" />}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {import.meta.env.PROD && <script defer src="/_vercel/insights/script.js"></script>}
   </head>
   <body class="bg-[var(--color-bg)] text-[var(--color-ink)]">
     <Nav settings={settings} />
