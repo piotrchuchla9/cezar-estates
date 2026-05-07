@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cezarestates.pl/sitemap-index.xml
