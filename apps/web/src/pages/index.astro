@@ -1,17 +1,9 @@
 ---
-import '~/styles/globals.css';
+import Base from '~/layouts/Base.astro';
 ---
-<!doctype html>
-<html lang="pl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>Cezar Estates</title>
-  </head>
-  <body>
-    <main class="p-8">
-      <h1 class="text-4xl font-extrabold">Cezar Estates — w budowie</h1>
-    </main>
-  </body>
-</html>
+<Base seo={{ title: 'Cezar Estates', description: 'Indywidualne projekty domów jednorodzinnych w Krakowie i okolicach.' }}>
+  <div class="mx-auto max-w-[var(--container-page)] px-4 py-20 md:px-10">
+    <h1 class="text-5xl font-extrabold tracking-tight md:text-7xl">CEZAR ESTATES</h1>
+    <p class="mt-4 text-[var(--color-ink-muted)]">Strona w budowie — kolejne sekcje wkrótce.</p>
+  </div>
+</Base>

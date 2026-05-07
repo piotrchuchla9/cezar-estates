@@ -1,0 +1,18 @@
+---
+import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
+import type { Entry } from 'contentful';
+
+interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+const { settings } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="bg-[#0a0a0a] text-neutral-400">
+  <div class="mx-auto flex max-w-[var(--container-page)] flex-col items-start justify-between gap-4 px-4 py-8 text-xs md:flex-row md:items-center md:px-10">
+    <div>© {year} Cezar Estates · Kraków</div>
+    <div class="flex flex-wrap gap-4">
+      <a href="/polityka-prywatnosci" class="hover:text-white">Polityka prywatności</a>
+      {settings.fields.socialInstagram && <a href={settings.fields.socialInstagram as string} class="hover:text-white">Instagram</a>}
+      {settings.fields.socialFacebook && <a href={settings.fields.socialFacebook as string} class="hover:text-white">Facebook</a>}
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,44 @@
+---
+import '~/styles/globals.css';
+import { buildSeo, organizationJsonLd, type SeoProps } from '~/lib/seo';
+import Nav from '~/components/astro/Nav.astro';
+import Footer from '~/components/astro/Footer.astro';
+import { getSiteSettings } from '~/lib/contentful';
+
+interface Props { seo: SeoProps }
+const { seo } = Astro.props;
+
+const siteUrl = import.meta.env.SITE_URL;
+const meta = buildSeo(seo, siteUrl);
+const settings = await getSiteSettings();
+const jsonLd = organizationJsonLd(
+  siteUrl,
+  settings.fields.contactPhone as string,
+  settings.fields.contactEmail as string,
+);
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="canonical" href={meta.canonical} />
+    <title>{meta.title}</title>
+    <meta name="description" content={meta.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:image" content={meta.ogImage} />
+    <meta property="og:locale" content="pl_PL" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {meta.noindex && <meta name="robots" content="noindex" />}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="bg-[var(--color-bg)] text-[var(--color-ink)]">
+    <Nav settings={settings} />
+    <main><slot /></main>
+    <Footer settings={settings} />
+  </body>
+</html>

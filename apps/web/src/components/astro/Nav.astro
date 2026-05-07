@@ -1,0 +1,50 @@
+---
+import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
+import type { Entry } from 'contentful';
+
+interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+const { settings: _settings } = Astro.props;
+
+const links = [
+  { href: '/realizacje', label: 'Realizacje' },
+  { href: '/#o-nas', label: 'O nas' },
+  { href: '/#proces', label: 'Proces' },
+  { href: '/w-budowie', label: 'W budowie' },
+];
+---
+<header class="sticky top-0 z-40 border-b border-[var(--color-line)] bg-[var(--color-bg)]/90 backdrop-blur">
+  <nav class="mx-auto flex max-w-[var(--container-page)] items-center justify-between px-4 py-4 md:px-10">
+    <a href="/" class="font-extrabold tracking-tight">
+      CEZAR <span class="text-[var(--color-accent)]">ESTATES</span>
+    </a>
+
+    <ul class="hidden items-center gap-7 text-sm font-medium md:flex">
+      {links.map((l) => <li><a href={l.href} class="hover:text-[var(--color-accent)]">{l.label}</a></li>)}
+      <li>
+        <a href="/kontakt" class="bg-[var(--color-accent)] px-4 py-2 text-white text-xs font-semibold tracking-wide hover:opacity-90">
+          KONTAKT →
+        </a>
+      </li>
+    </ul>
+
+    <button id="nav-toggle" class="md:hidden p-2" aria-label="Otwórz menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="hidden border-t border-[var(--color-line)] md:hidden">
+    <ul class="flex flex-col gap-2 px-4 py-4">
+      {links.map((l) => <li><a href={l.href} class="block py-2 text-base">{l.label}</a></li>)}
+      <li><a href="/kontakt" class="mt-2 inline-block bg-[var(--color-accent)] px-4 py-3 text-white font-semibold">KONTAKT →</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>
