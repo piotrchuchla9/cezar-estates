@@ -27,7 +27,10 @@ jobs:
           git config user.name "contentful-bot"
           git config user.email "contentful-bot@users.noreply.github.com"
 
-      - name: Empty commit to trigger Vercel
+      - name: Touch rebuild marker to force Vercel rebuild
         run: |
-          git commit --allow-empty -m "chore: rebuild from contentful publish [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
+          mkdir -p apps/web/src/generated
+          date -u +%Y-%m-%dT%H:%M:%SZ > apps/web/src/generated/last-rebuild.txt
+          git add apps/web/src/generated/last-rebuild.txt
+          git commit -m "chore: rebuild from contentful publish [$(date -u +%Y-%m-%dT%H:%M:%SZ)]"
           git push origin HEAD:main
