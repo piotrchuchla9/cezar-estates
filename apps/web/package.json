@@ -13,6 +13,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@cezar/contentful-types": "workspace:*",
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.1.0",
     "@astrojs/sitemap": "^3.2.1",
