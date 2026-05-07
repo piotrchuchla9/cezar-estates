@@ -1,0 +1,25 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env", ".env.local"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".astro/**"],
+      "env": [
+        "CONTENTFUL_SPACE_ID",
+        "CONTENTFUL_DELIVERY_TOKEN",
+        "RESEND_API_KEY",
+        "CONTACT_EMAIL",
+        "CONTACT_FROM_EMAIL",
+        "SITE_URL",
+        "PUBLIC_TURNSTILE_SITE_KEY",
+        "TURNSTILE_SECRET_KEY"
+      ]
+    },
+    "dev": { "cache": false, "persistent": true },
+    "typecheck": { "dependsOn": ["^build"] },
+    "test": { "dependsOn": ["^build"] },
+    "test:e2e": { "dependsOn": ["^build"] },
+    "generate": { "cache": false }
+  }
+}
