@@ -29,6 +29,21 @@ const client = createClient({ accessToken: CMA_TOKEN });
 // ---- Helper: sleep ----
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+// ---- Helper: extract HTTP status from contentful-management error ----
+// SDK v11 wraps errors with status either on err.status, err.statusCode, or
+// inside JSON-encoded err.message. Check all three.
+function errorStatus(err: any): number | undefined {
+  if (typeof err?.status === "number") return err.status;
+  if (typeof err?.statusCode === "number") return err.statusCode;
+  try {
+    const parsed = JSON.parse(err?.message ?? "");
+    if (typeof parsed?.status === "number") return parsed.status;
+  } catch {
+    // not JSON
+  }
+  return undefined;
+}
+
 // ---- Helper: retry with backoff ----
 async function withRetry<T>(
   fn: () => Promise<T>,
@@ -39,7 +54,8 @@ async function withRetry<T>(
     try {
       return await fn();
     } catch (err: any) {
-      if (i < retries - 1 && (err?.status === 429 || err?.status === 503)) {
+      const status = errorStatus(err);
+      if (i < retries - 1 && (status === 429 || status === 503)) {
         console.log(`  Rate limited, waiting ${delayMs}ms...`);
         await sleep(delayMs);
         delayMs *= 2;
@@ -349,7 +365,7 @@ async function main() {
       console.log(`  SKIP  [${ct.id}] already exists (version ${existing.sys.version})`);
       typesSkipped++;
     } catch (err: any) {
-      if (err?.status !== 404) throw err;
+      if (errorStatus(err) !== 404) throw err;
 
       // Build fields payload
       const fields = ct.fields.map((f: any) => {
@@ -401,7 +417,7 @@ async function main() {
       console.log(`  SKIP  [${a.id}] "${a.title}" already exists`);
       assetsSkipped++;
     } catch (err: any) {
-      if (err?.status !== 404) throw err;
+      if (errorStatus(err) !== 404) throw err;
 
       const asset = await withRetry(() =>
         env.createAssetWithId(a.id, {
@@ -471,7 +487,7 @@ async function main() {
       console.log(`  SKIP  [${step.id}] "${step.title}" already exists`);
       entriesSkipped++;
     } catch (err: any) {
-      if (err?.status !== 404) throw err;
+      if (errorStatus(err) !== 404) throw err;
 
       const entry = await withRetry(() =>
         env.createEntryWithId("processStep", step.id, {
@@ -501,7 +517,7 @@ async function main() {
     console.log(`  SKIP  [${siteSettingsId}] siteSettings already exists`);
     entriesSkipped++;
   } catch (err: any) {
-    if (err?.status !== 404) throw err;
+    if (errorStatus(err) !== 404) throw err;
 
     const entry = await withRetry(() =>
       env.createEntryWithId("siteSettings", siteSettingsId, {
@@ -572,7 +588,7 @@ async function main() {
       console.log(`  SKIP  [${p.id}] "${p.title}" already exists`);
       entriesSkipped++;
     } catch (err: any) {
-      if (err?.status !== 404) throw err;
+      if (errorStatus(err) !== 404) throw err;
 
       const entry = await withRetry(() =>
         env.createEntryWithId("project", p.id, {
@@ -606,7 +622,7 @@ async function main() {
     console.log(`  SKIP  [${inProgressId}] "Dom Brzozowy" already exists`);
     entriesSkipped++;
   } catch (err: any) {
-    if (err?.status !== 404) throw err;
+    if (errorStatus(err) !== 404) throw err;
 
     const entry = await withRetry(() =>
       env.createEntryWithId("inProgressEntry", inProgressId, {
