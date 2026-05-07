@@ -1,0 +1,29 @@
+---
+import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
+import type { Entry } from 'contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+
+interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+const { settings } = Astro.props;
+
+const portrait = settings.fields.aboutPortrait as { fields: { file: { url: string } } };
+const portraitUrl = `https:${portrait.fields.file.url}?w=440&h=560&fit=fill&fm=webp&q=85`;
+const aboutBody = settings.fields.aboutBody as Parameters<typeof documentToHtmlString>[0];
+const bodyHtml = documentToHtmlString(aboutBody);
+const aboutHeadline = settings.fields.aboutHeadline as string;
+---
+<section id="o-nas" class="border-t border-[var(--color-line)]">
+  <div class="mx-auto grid max-w-[var(--container-page)] grid-cols-1 gap-10 px-4 py-20 md:grid-cols-[1fr_1.5fr] md:gap-16 md:px-10 md:py-24">
+    <div>
+      <div class="text-[10px] font-semibold tracking-[3px] text-[var(--color-accent)]">O FIRMIE</div>
+      <img src={portraitUrl} alt="Ewa Korgól — założycielka Cezar Estates" class="mt-5 w-full max-w-[280px] aspect-[4/5] object-cover" loading="lazy" />
+      <div class="mt-3 text-xs text-[var(--color-ink-muted)]">Ewa Korgól — założycielka</div>
+    </div>
+    <div>
+      <h2 class="text-3xl font-bold leading-[1.05] tracking-tight md:text-5xl">
+        {aboutHeadline}
+      </h2>
+      <div class="prose prose-neutral mt-6 max-w-xl text-[15px] leading-relaxed text-[var(--color-ink-muted)]" set:html={bodyHtml} />
+    </div>
+  </div>
+</section>

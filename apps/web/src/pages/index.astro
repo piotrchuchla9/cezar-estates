@@ -1,6 +1,7 @@
 ---
 import Base from '~/layouts/Base.astro';
 import Hero from '~/components/astro/Hero.astro';
+import About from '~/components/astro/About.astro';
 import { getSiteSettings } from '~/lib/contentful';
 
 const settings = await getSiteSettings();
@@ -10,4 +11,5 @@ const settings = await getSiteSettings();
   description: 'Indywidualne projekty domów jednorodzinnych w Krakowie i okolicach. Cezar Estates — domy na pokolenia.'
 }}>
   <Hero settings={settings} />
+  <About settings={settings} />
 </Base>

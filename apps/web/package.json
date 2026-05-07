@@ -13,11 +13,15 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@cezar/contentful-types": "workspace:*",
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.1.0",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/vercel": "^8.0.0",
+    "@cezar/contentful-types": "workspace:*",
+    "@contentful/rich-text-html-renderer": "^17.2.2",
+    "@contentful/rich-text-types": "^17.2.7",
+    "@react-email/components": "^0.0.31",
+    "@react-email/render": "^1.0.3",
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.0.0",
     "contentful": "^11.0.0",
@@ -28,9 +32,7 @@
     "react-dom": "^19.0.0",
     "resend": "^4.0.0",
     "tailwindcss": "^4.0.0",
-    "zod": "^3.23.8",
-    "@react-email/components": "^0.0.31",
-    "@react-email/render": "^1.0.3"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",

@@ -44,6 +44,12 @@ importers:
       '@cezar/contentful-types':
         specifier: workspace:*
         version: link:../../packages/contentful-types
+      '@contentful/rich-text-html-renderer':
+        specifier: ^17.2.2
+        version: 17.2.2
+      '@contentful/rich-text-types':
+        specifier: ^17.2.7
+        version: 17.2.7
       '@react-email/components':
         specifier: ^0.0.31
         version: 0.0.31(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -336,9 +342,17 @@ packages:
   '@contentful/content-source-maps@0.11.44':
     resolution: {integrity: sha512-tu1gfmZI59hQ7qKhmGOV0dA5brxhsc+LOfPwBsQQMDAVy5kVpTrKf/AGlL2y9QhKHu/NtCrwX/ZrmRFgtGEtIA==}
 
+  '@contentful/rich-text-html-renderer@17.2.2':
+    resolution: {integrity: sha512-Ps5SGrlrgvzJw7n7rawj6RLlv7eZnpDcGrnr8G+0FyOVsvh8y9azwyuQ4MVshgZUUJ02Z2Tc07YiTFYRFCFrlg==}
+    engines: {node: '>=20.0.0'}
+
   '@contentful/rich-text-types@16.8.5':
     resolution: {integrity: sha512-q18RJuJCOuYveGiCIjE5xLCQc5lZ3L2Qgxrlg/H2YEobDFqdtmklazRi1XwEWaK3tMg6yVXBzKKkQfLB4qW14A==}
     engines: {node: '>=6.0.0'}
+
+  '@contentful/rich-text-types@17.2.7':
+    resolution: {integrity: sha512-aIdozk8vk5gsYcallOrwEiL6+GSlMXZorDOmiVELfpbVaXMJPJPlf2CBw3LUzviAqCw0UPQcKHHCwG7SdY7u5w==}
+    engines: {node: '>=20.0.0'}
 
   '@emmetio/abbreviation@2.3.3':
     resolution: {integrity: sha512-mgv58UrU3rh4YgbE/TzgLQwJ3pFsHHhCLqY20aJq+9comytTXUDNGG/SMtSeMJdkpxgXSXunBGLD8Boka3JyVA==}
@@ -4502,7 +4516,13 @@ snapshots:
       '@vercel/stega': 0.1.2
       json-pointer: 0.6.2
 
+  '@contentful/rich-text-html-renderer@17.2.2':
+    dependencies:
+      '@contentful/rich-text-types': 17.2.7
+
   '@contentful/rich-text-types@16.8.5': {}
+
+  '@contentful/rich-text-types@17.2.7': {}
 
   '@emmetio/abbreviation@2.3.3':
     dependencies:
