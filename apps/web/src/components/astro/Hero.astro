@@ -2,6 +2,7 @@
 import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
 import HeroParallax from '~/components/react/HeroParallax';
+import MagneticButton from '~/components/react/MagneticButton';
 
 interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
 const { settings } = Astro.props;
@@ -22,12 +23,12 @@ const subheadline = settings.fields.heroSubheadline as string;
       {subheadline}
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
-      <a href="/realizacje" class="bg-[var(--color-accent)] px-5 py-3 text-white text-[13px] font-semibold tracking-wide hover:opacity-90">
+      <MagneticButton client:visible href="/realizacje" className="bg-[var(--color-accent)] px-5 py-3 text-white text-[13px] font-semibold tracking-wide hover:opacity-90">
         ZOBACZ REALIZACJE →
-      </a>
-      <a href="/kontakt" class="border border-[var(--color-accent)] px-5 py-3 text-[var(--color-accent)] text-[13px] font-semibold tracking-wide hover:bg-[var(--color-accent)] hover:text-white">
+      </MagneticButton>
+      <MagneticButton client:visible href="/kontakt" className="border border-[var(--color-accent)] px-5 py-3 text-[var(--color-accent)] text-[13px] font-semibold tracking-wide hover:bg-[var(--color-accent)] hover:text-white">
         SKONTAKTUJ SIĘ
-      </a>
+      </MagneticButton>
     </div>
   </div>
 
