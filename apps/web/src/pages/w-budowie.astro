@@ -1,0 +1,21 @@
+---
+import Base from '~/layouts/Base.astro';
+import InProgressGrid from '~/components/astro/InProgressGrid.astro';
+import { getInProgressEntries } from '~/lib/contentful';
+
+const entries = await getInProgressEntries();
+---
+<Base seo={{
+  title: 'W budowie',
+  description: 'Aktualnie realizowane projekty Cezar Estates.'
+}}>
+  <div class="bg-[var(--color-accent)] text-white">
+    <div class="mx-auto max-w-[var(--container-page)] px-4 py-20 md:px-10 md:py-24">
+      <div class="text-[10px] font-semibold tracking-[3px] text-[var(--color-accent-soft)]">AKTUALNIE</div>
+      <h1 class="mt-2 text-4xl font-extrabold leading-none tracking-tight md:text-6xl">W budowie.</h1>
+      <div class="mt-10">
+        <InProgressGrid entries={entries} variant="full" />
+      </div>
+    </div>
+  </div>
+</Base>
