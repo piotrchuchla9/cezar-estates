@@ -1,0 +1,37 @@
+---
+import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
+import type { Entry } from 'contentful';
+import HeroParallax from '~/components/react/HeroParallax';
+
+interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+const { settings } = Astro.props;
+
+const heroImage = settings.fields.heroBackgroundImage as { fields: { file: { url: string }; title?: string } };
+const imageUrl = `https:${heroImage.fields.file.url}?w=1600&fm=webp&q=80`;
+const imageAlt = heroImage.fields.title ?? 'Cezar Estates';
+const headline = settings.fields.heroHeadline as string;
+const subheadline = settings.fields.heroSubheadline as string;
+---
+<section class="relative grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] min-h-[480px] lg:min-h-[560px]">
+  <div class="px-6 py-16 md:px-10 md:py-20 lg:py-28 flex flex-col justify-center">
+    <div class="text-[11px] font-semibold tracking-[3px] text-[var(--color-accent)]">EST. KRAKÓW</div>
+    <h1 class="mt-5 font-extrabold leading-[0.92] tracking-[-0.05em] text-[44px] sm:text-[56px] lg:text-[72px]">
+      {headline}
+    </h1>
+    <p class="mt-7 max-w-md text-[15px] leading-relaxed text-[var(--color-ink-muted)]">
+      {subheadline}
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/realizacje" class="bg-[var(--color-accent)] px-5 py-3 text-white text-[13px] font-semibold tracking-wide hover:opacity-90">
+        ZOBACZ REALIZACJE →
+      </a>
+      <a href="/kontakt" class="border border-[var(--color-accent)] px-5 py-3 text-[var(--color-accent)] text-[13px] font-semibold tracking-wide hover:bg-[var(--color-accent)] hover:text-white">
+        SKONTAKTUJ SIĘ
+      </a>
+    </div>
+  </div>
+
+  <div class="relative overflow-hidden bg-[var(--color-accent)] min-h-[280px] lg:min-h-0">
+    <HeroParallax client:load imageUrl={imageUrl} alt={imageAlt} />
+  </div>
+</section>

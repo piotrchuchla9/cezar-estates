@@ -1,9 +1,13 @@
 ---
 import Base from '~/layouts/Base.astro';
+import Hero from '~/components/astro/Hero.astro';
+import { getSiteSettings } from '~/lib/contentful';
+
+const settings = await getSiteSettings();
 ---
-<Base seo={{ title: 'Cezar Estates', description: 'Indywidualne projekty domów jednorodzinnych w Krakowie i okolicach.' }}>
-  <div class="mx-auto max-w-[var(--container-page)] px-4 py-20 md:px-10">
-    <h1 class="text-5xl font-extrabold tracking-tight md:text-7xl">CEZAR ESTATES</h1>
-    <p class="mt-4 text-[var(--color-ink-muted)]">Strona w budowie — kolejne sekcje wkrótce.</p>
-  </div>
+<Base seo={{
+  title: 'Cezar Estates',
+  description: 'Indywidualne projekty domów jednorodzinnych w Krakowie i okolicach. Cezar Estates — domy na pokolenia.'
+}}>
+  <Hero settings={settings} />
 </Base>
