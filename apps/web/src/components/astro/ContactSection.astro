@@ -2,6 +2,7 @@
 import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
 import ContactForm from '~/components/react/ContactForm';
+import ScrollReveal from '~/components/react/ScrollReveal';
 
 interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
 const { settings } = Astro.props;
@@ -12,7 +13,7 @@ const city = f.contactCity as string;
 ---
 <section id="kontakt" class="border-t border-[var(--color-line)]">
   <div class="mx-auto grid max-w-[var(--container-page)] grid-cols-1 gap-10 px-4 py-20 md:grid-cols-2 md:gap-16 md:px-10 md:py-24">
-    <div>
+    <ScrollReveal client:visible>
       <div class="text-[10px] font-semibold tracking-[3px] text-[var(--color-accent)]">KONTAKT</div>
       <h2 class="mt-3 text-4xl font-extrabold leading-[0.95] tracking-tight md:text-6xl">
         Porozmawiajmy o twoim domu.
@@ -23,7 +24,7 @@ const city = f.contactCity as string;
         <div><a href={`mailto:${email}`}>{email}</a></div>
         <div>{city}</div>
       </div>
-    </div>
+    </ScrollReveal>
     <div class="bg-[#f4f1ea] p-6 md:p-8">
       <ContactForm client:visible siteKey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY} />
     </div>
