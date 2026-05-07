@@ -3,7 +3,9 @@ import type { TypeProcessStepSkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
 import CountUp from '~/components/react/CountUp';
 
-interface Props { step: Entry<TypeProcessStepSkeleton> }
+interface Props {
+  step: Entry<TypeProcessStepSkeleton>;
+}
 const { step } = Astro.props;
 const number = step.fields.number as number;
 const title = step.fields.title as string;

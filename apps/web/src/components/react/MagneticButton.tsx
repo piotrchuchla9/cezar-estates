@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { useRef, type CSSProperties } from 'react';
+import { type CSSProperties, useRef } from 'react';
 
 interface Props {
   href: string;
@@ -7,7 +7,12 @@ interface Props {
   style?: CSSProperties;
 }
 
-export default function MagneticButton({ href, className, style, children }: PropsWithChildren<Props>) {
+export default function MagneticButton({
+  href,
+  className,
+  style,
+  children,
+}: PropsWithChildren<Props>) {
   const ref = useRef<HTMLAnchorElement>(null);
 
   function onMove(e: React.MouseEvent<HTMLAnchorElement>) {

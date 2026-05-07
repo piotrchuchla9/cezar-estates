@@ -1,9 +1,9 @@
-import { createClient } from 'contentful';
 import type {
-  TypeProjectSkeleton,
   TypeInProgressEntrySkeleton,
+  TypeProjectSkeleton,
   TypeSiteSettingsSkeleton,
 } from '@cezar/contentful-types';
+import { createClient } from 'contentful';
 import type { Entry } from 'contentful';
 
 // Lazy client initialisation — avoids throwing at module load time (e.g. during tests).
@@ -18,19 +18,15 @@ function getClient() {
 
 let _cf: ReturnType<typeof createClient> | null = null;
 function client() {
-  return (_cf ??= getClient());
+  if (!_cf) _cf = getClient();
+  return _cf;
 }
 
-export function sortProjectsForDisplay<T extends Entry<TypeProjectSkeleton>>(
-  projects: T[],
-): T[] {
+export function sortProjectsForDisplay<T extends Entry<TypeProjectSkeleton>>(projects: T[]): T[] {
   return [...projects].sort((a, b) => {
-    const orderDiff =
-      ((a.fields.order as number) ?? 0) - ((b.fields.order as number) ?? 0);
+    const orderDiff = ((a.fields.order as number) ?? 0) - ((b.fields.order as number) ?? 0);
     if (orderDiff !== 0) return orderDiff;
-    return (
-      ((b.fields.year as number) ?? 0) - ((a.fields.year as number) ?? 0)
-    );
+    return ((b.fields.year as number) ?? 0) - ((a.fields.year as number) ?? 0);
   });
 }
 

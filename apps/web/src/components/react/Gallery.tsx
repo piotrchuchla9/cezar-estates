@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 
-interface Image { url: string; alt: string }
-interface Props { images: Image[] }
+interface Image {
+  url: string;
+  alt: string;
+}
+interface Props {
+  images: Image[];
+}
 
 export default function Gallery({ images }: Props) {
   const [open, setOpen] = useState<number | null>(null);
@@ -10,7 +15,8 @@ export default function Gallery({ images }: Props) {
     if (open === null) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(null);
-      if (e.key === 'ArrowLeft') setOpen((i) => (i === null ? null : (i - 1 + images.length) % images.length));
+      if (e.key === 'ArrowLeft')
+        setOpen((i) => (i === null ? null : (i - 1 + images.length) % images.length));
       if (e.key === 'ArrowRight') setOpen((i) => (i === null ? null : (i + 1) % images.length));
     };
     window.addEventListener('keydown', onKey);
@@ -19,7 +25,9 @@ export default function Gallery({ images }: Props) {
 
   useEffect(() => {
     document.body.style.overflow = open !== null ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
   return (
@@ -33,43 +41,65 @@ export default function Gallery({ images }: Props) {
             className="aspect-square overflow-hidden bg-neutral-200"
             aria-label={`Otwórz zdjęcie ${i + 1}`}
           >
-            <img src={img.url} alt={img.alt} className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy" />
+            <img
+              src={img.url}
+              alt={img.alt}
+              className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+              loading="lazy"
+            />
           </button>
         ))}
       </div>
 
       {open !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+        // biome-ignore lint/a11y/useSemanticElements: lightbox overlay uses div intentionally
+        // biome-ignore lint/a11y/useKeyWithClickEvents: keyboard events handled via window keydown listener in useEffect
+        <dialog
+          open
+          className="fixed inset-0 z-50 m-0 flex h-full w-full max-w-full items-center justify-center bg-black/95 p-4"
           onClick={() => setOpen(null)}
-          role="dialog"
-          aria-modal="true"
         >
           <button
             type="button"
             className="absolute top-4 right-4 text-white text-3xl"
-            onClick={(e) => { e.stopPropagation(); setOpen(null); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen(null);
+            }}
             aria-label="Zamknij"
-          >×</button>
+          >
+            ×
+          </button>
           <button
             type="button"
             className="absolute left-4 text-white text-4xl px-3"
-            onClick={(e) => { e.stopPropagation(); setOpen((i) => i === null ? null : (i - 1 + images.length) % images.length); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen((i) => (i === null ? null : (i - 1 + images.length) % images.length));
+            }}
             aria-label="Poprzednie"
-          >‹</button>
+          >
+            ‹
+          </button>
+          {/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only, no interactive meaning */}
           <img
-            src={images[open]!.url.replace(/w=\d+/, 'w=1600')}
-            alt={images[open]!.alt}
+            src={images[open]?.url.replace(/w=\d+/, 'w=1600')}
+            alt={images[open]?.alt}
             className="max-h-[90vh] max-w-[90vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           <button
             type="button"
             className="absolute right-4 text-white text-4xl px-3"
-            onClick={(e) => { e.stopPropagation(); setOpen((i) => i === null ? null : (i + 1) % images.length); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpen((i) => (i === null ? null : (i + 1) % images.length));
+            }}
             aria-label="Następne"
-          >›</button>
-        </div>
+          >
+            ›
+          </button>
+        </dialog>
       )}
     </>
   );

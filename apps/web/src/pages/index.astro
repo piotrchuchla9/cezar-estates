@@ -1,11 +1,11 @@
 ---
-import Base from '~/layouts/Base.astro';
-import Hero from '~/components/astro/Hero.astro';
 import About from '~/components/astro/About.astro';
-import ProjectsGrid from '~/components/astro/ProjectsGrid.astro';
-import Process from '~/components/astro/Process.astro';
-import InProgressGrid from '~/components/astro/InProgressGrid.astro';
 import ContactSection from '~/components/astro/ContactSection.astro';
+import Hero from '~/components/astro/Hero.astro';
+import InProgressGrid from '~/components/astro/InProgressGrid.astro';
+import Process from '~/components/astro/Process.astro';
+import ProjectsGrid from '~/components/astro/ProjectsGrid.astro';
+import Base from '~/layouts/Base.astro';
 import { getCompletedProjects, getInProgressEntries, getSiteSettings } from '~/lib/contentful';
 
 const [settings, projects, inProgress] = await Promise.all([

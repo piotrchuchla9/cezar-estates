@@ -1,6 +1,6 @@
 ---
-import Base from '~/layouts/Base.astro';
 import ProjectsGrid from '~/components/astro/ProjectsGrid.astro';
+import Base from '~/layouts/Base.astro';
 import { getCompletedProjects } from '~/lib/contentful';
 
 const projects = await getCompletedProjects();

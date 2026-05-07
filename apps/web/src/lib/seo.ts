@@ -7,12 +7,17 @@ export interface SeoProps {
 }
 
 export function buildSeo(props: SeoProps, siteUrl: string) {
-  const fullTitle = props.title === 'Cezar Estates'
-    ? props.title
-    : `${props.title} — Cezar Estates`;
+  const fullTitle =
+    props.title === 'Cezar Estates' ? props.title : `${props.title} — Cezar Estates`;
   const canonical = props.canonical ?? siteUrl;
   const ogImage = props.ogImage ?? `${siteUrl}/og-default.jpg`;
-  return { title: fullTitle, description: props.description, canonical, ogImage, noindex: props.noindex ?? false };
+  return {
+    title: fullTitle,
+    description: props.description,
+    canonical,
+    ogImage,
+    noindex: props.noindex ?? false,
+  };
 }
 
 export function organizationJsonLd(siteUrl: string, phone: string, email: string) {

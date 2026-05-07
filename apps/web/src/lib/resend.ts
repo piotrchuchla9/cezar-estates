@@ -1,5 +1,5 @@
-import { Resend } from 'resend';
 import { render } from '@react-email/render';
+import { Resend } from 'resend';
 import ContactNotification from '~/emails/ContactNotification';
 import type { ContactInput } from './validation';
 

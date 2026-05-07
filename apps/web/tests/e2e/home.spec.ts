@@ -11,7 +11,10 @@ test('homepage renders all sections', async ({ page }) => {
 
 test('navigation to /realizacje works', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: /realizacje/i }).first().click();
+  await page
+    .getByRole('link', { name: /realizacje/i })
+    .first()
+    .click();
   await expect(page).toHaveURL(/\/realizacje/);
   await expect(page.getByRole('heading', { name: /Wszystkie projekty/i })).toBeVisible();
 });

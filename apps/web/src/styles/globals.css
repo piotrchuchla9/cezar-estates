@@ -1,12 +1,12 @@
+@import "tailwindcss";
+
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400 800;
   font-display: swap;
-  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+  src: url("/fonts/Inter-Variable.woff2") format("woff2");
 }
-
-@import 'tailwindcss';
 
 @theme {
   --color-bg: #fafaf7;
@@ -16,8 +16,8 @@
   --color-accent-soft: #d9d4c7;
   --color-line: #e5e2da;
 
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
 
   --container-page: 1280px;
 }
@@ -35,7 +35,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

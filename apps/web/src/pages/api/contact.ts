@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
-import { contactSchema } from '~/lib/validation';
-import { verifyTurnstile } from '~/lib/turnstile';
 import { sendContactEmail } from '~/lib/resend';
+import { verifyTurnstile } from '~/lib/turnstile';
+import { contactSchema } from '~/lib/validation';
 
 export const prerender = false;
 
@@ -15,7 +15,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   const parsed = contactSchema.safeParse(body);
   if (!parsed.success) {
-    return Response.json({ error: 'Walidacja nieudana', issues: parsed.error.flatten() }, { status: 400 });
+    return Response.json(
+      { error: 'Walidacja nieudana', issues: parsed.error.flatten() },
+      { status: 400 },
+    );
   }
 
   const ok = await verifyTurnstile(

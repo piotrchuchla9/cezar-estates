@@ -1,12 +1,14 @@
 ---
 import '~/styles/globals.css';
-import { buildSeo, organizationJsonLd, type SeoProps } from '~/lib/seo';
-import Nav from '~/components/astro/Nav.astro';
 import Footer from '~/components/astro/Footer.astro';
+import Nav from '~/components/astro/Nav.astro';
 import SmoothScroll from '~/components/react/SmoothScroll';
 import { getSiteSettings } from '~/lib/contentful';
+import { type SeoProps, buildSeo, organizationJsonLd } from '~/lib/seo';
 
-interface Props { seo: SeoProps }
+interface Props {
+  seo: SeoProps;
+}
 const { seo } = Astro.props;
 
 const siteUrl = import.meta.env.SITE_URL;

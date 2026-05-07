@@ -1,6 +1,10 @@
 const ENDPOINT = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 
-export async function verifyTurnstile(token: string, secret: string, remoteIp?: string): Promise<boolean> {
+export async function verifyTurnstile(
+  token: string,
+  secret: string,
+  remoteIp?: string,
+): Promise<boolean> {
   try {
     const body = new URLSearchParams({ secret, response: token });
     if (remoteIp) body.set('remoteip', remoteIp);

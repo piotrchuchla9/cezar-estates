@@ -7,7 +7,7 @@ describe('sortProjectsForDisplay', () => {
       { fields: { order: 2, year: 2024, title: 'B' } },
       { fields: { order: 1, year: 2023, title: 'A' } },
       { fields: { order: 1, year: 2025, title: 'A2' } },
-    // biome-ignore lint/suspicious/noExplicitAny: minimal fixture
+      // biome-ignore lint/suspicious/noExplicitAny: minimal fixture
     ] as any[];
 
     const sorted = sortProjectsForDisplay(projects);

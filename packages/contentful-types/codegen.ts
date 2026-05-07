@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
-import { mkdirSync, readdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { resolve, join } from 'node:path';
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const TOKEN = process.env.CONTENTFUL_MANAGEMENT_TOKEN;
@@ -42,14 +42,12 @@ const merged = [
   '',
   ...sections.map((s) => {
     // Strip per-file contentful import lines (already added above)
-    return s
-      .replace(/^import type \{[^}]+\} from ["']contentful["'];?\n?/gm, '')
-      .trim();
+    return s.replace(/^import type \{[^}]+\} from ["']contentful["'];?\n?/gm, '').trim();
   }),
 ].join('\n\n');
 
 const outFile = resolve(srcDir, 'generated.ts');
-writeFileSync(outFile, merged + '\n', 'utf-8');
+writeFileSync(outFile, `${merged}\n`, 'utf-8');
 
 // Clean up temp dir
 rmSync(tmpDir, { recursive: true, force: true });

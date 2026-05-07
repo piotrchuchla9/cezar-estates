@@ -1,7 +1,7 @@
 ---
-import Base from '~/layouts/Base.astro';
-import Gallery from '~/components/react/Gallery';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import Gallery from '~/components/react/Gallery';
+import Base from '~/layouts/Base.astro';
 import { getCompletedProjects, getProjectBySlug } from '~/lib/contentful';
 
 export async function getStaticPaths() {
@@ -10,7 +10,7 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const project = await getProjectBySlug(slug!);
+const project = await getProjectBySlug(slug ?? '');
 if (!project) return Astro.redirect('/realizacje');
 
 const f = project.fields;

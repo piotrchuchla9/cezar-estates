@@ -1,9 +1,11 @@
-import type { PropsWithChildren } from 'react';
 import { motion, useInView } from 'motion/react';
+import type { PropsWithChildren } from 'react';
 import { useRef } from 'react';
 import { fadeUp } from '~/lib/animations';
 
-interface Props { delay?: number }
+interface Props {
+  delay?: number;
+}
 
 export default function ScrollReveal({ children, delay = 0 }: PropsWithChildren<Props>) {
   const ref = useRef<HTMLDivElement>(null);

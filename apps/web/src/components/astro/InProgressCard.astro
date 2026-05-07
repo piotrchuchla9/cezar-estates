@@ -3,7 +3,9 @@ import type { TypeInProgressEntrySkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
 import ProgressBar from '~/components/react/ProgressBar';
 
-interface Props { entry: Entry<TypeInProgressEntrySkeleton> }
+interface Props {
+  entry: Entry<TypeInProgressEntrySkeleton>;
+}
 const { entry } = Astro.props;
 const f = entry.fields;
 const title = f.title as string;

@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-interface Props { to: number; duration?: number }
+interface Props {
+  to: number;
+  duration?: number;
+}
 
 export default function CountUp({ to, duration = 800 }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -15,20 +18,23 @@ export default function CountUp({ to, duration = 800 }: Props) {
       return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          observer.disconnect();
-          const start = performance.now();
-          const tick = (now: number) => {
-            const t = Math.min(1, (now - start) / duration);
-            setValue(Math.round(to * t));
-            if (t < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+            const start = performance.now();
+            const tick = (now: number) => {
+              const t = Math.min(1, (now - start) / duration);
+              setValue(Math.round(to * t));
+              if (t < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }
         }
-      }
-    }, { threshold: 0.5 });
+      },
+      { threshold: 0.5 },
+    );
 
     observer.observe(el);
     return () => observer.disconnect();

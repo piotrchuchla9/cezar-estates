@@ -5,14 +5,16 @@ declare global {
     turnstile?: {
       render: (
         el: string | HTMLElement,
-        opts: { sitekey: string; callback: (token: string) => void; 'error-callback'?: () => void; },
+        opts: { sitekey: string; callback: (token: string) => void; 'error-callback'?: () => void },
       ) => string;
       reset: (id?: string) => void;
     };
   }
 }
 
-interface Props { siteKey: string }
+interface Props {
+  siteKey: string;
+}
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
@@ -38,8 +40,12 @@ export default function ContactForm({ siteKey }: Props) {
       if (window.turnstile && turnstileEl.current) {
         window.turnstile.render(turnstileEl.current, {
           sitekey: siteKey,
-          callback: (token: string) => { turnstileTokenRef.current = token; },
-          'error-callback': () => { turnstileTokenRef.current = ''; },
+          callback: (token: string) => {
+            turnstileTokenRef.current = token;
+          },
+          'error-callback': () => {
+            turnstileTokenRef.current = '';
+          },
         });
         return true;
       }
@@ -47,7 +53,9 @@ export default function ContactForm({ siteKey }: Props) {
     };
 
     if (!tryRender()) {
-      const id = setInterval(() => { if (tryRender()) clearInterval(id); }, 200);
+      const id = setInterval(() => {
+        if (tryRender()) clearInterval(id);
+      }, 200);
       return () => clearInterval(id);
     }
   }, [siteKey]);
@@ -96,14 +104,44 @@ export default function ContactForm({ siteKey }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3" aria-label="Formularz kontaktowy">
-      <input name="name" placeholder="Imię i nazwisko" required className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none" />
-      <input name="email" type="email" placeholder="Email" required className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none" />
-      <input name="phone" placeholder="Telefon (opcjonalnie)" className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none" />
-      <textarea name="message" placeholder="Wiadomość" rows={5} required minLength={20} className="border border-neutral-300 bg-white p-3 text-sm focus:border-[var(--color-accent)] focus:outline-none" />
-      <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-0 w-0" />
+      <input
+        name="name"
+        placeholder="Imię i nazwisko"
+        required
+        className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none"
+      />
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        required
+        className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none"
+      />
+      <input
+        name="phone"
+        placeholder="Telefon (opcjonalnie)"
+        className="h-11 border border-neutral-300 bg-white px-3 text-sm focus:border-[var(--color-accent)] focus:outline-none"
+      />
+      <textarea
+        name="message"
+        placeholder="Wiadomość"
+        rows={5}
+        required
+        minLength={20}
+        className="border border-neutral-300 bg-white p-3 text-sm focus:border-[var(--color-accent)] focus:outline-none"
+      />
+      <input
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0"
+      />
       <label className="flex items-start gap-2 text-xs text-neutral-600">
         <input type="checkbox" name="consent" required className="mt-0.5" />
-        <span>Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie (RODO).</span>
+        <span>
+          Wyrażam zgodę na przetwarzanie moich danych w celu odpowiedzi na zapytanie (RODO).
+        </span>
       </label>
       <div ref={turnstileEl} />
       <button

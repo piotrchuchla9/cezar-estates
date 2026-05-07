@@ -1,13 +1,17 @@
 ---
-import type { TypeSiteSettingsSkeleton, TypeProcessStepSkeleton } from '@cezar/contentful-types';
+import type { TypeProcessStepSkeleton, TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
-import ProcessStep from './ProcessStep.astro';
 import ScrollReveal from '~/components/react/ScrollReveal';
+import ProcessStep from './ProcessStep.astro';
 
-interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+interface Props {
+  settings: Entry<TypeSiteSettingsSkeleton>;
+}
 const { settings } = Astro.props;
 const rawSteps = (settings.fields.processSteps ?? []) as Entry<TypeProcessStepSkeleton>[];
-const steps = [...rawSteps].sort((a, b) => (a.fields.number as number) - (b.fields.number as number));
+const steps = [...rawSteps].sort(
+  (a, b) => (a.fields.number as number) - (b.fields.number as number),
+);
 ---
 <section id="proces">
   <div class="mx-auto max-w-[var(--container-page)] px-4 py-20 md:px-10 md:py-24">

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-interface Props { percent: number }
+interface Props {
+  percent: number;
+}
 
 export default function ProgressBar({ percent }: Props) {
   const ref = useRef<HTMLDivElement>(null);

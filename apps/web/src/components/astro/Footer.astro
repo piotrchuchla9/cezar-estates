@@ -2,7 +2,9 @@
 import type { TypeSiteSettingsSkeleton } from '@cezar/contentful-types';
 import type { Entry } from 'contentful';
 
-interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+interface Props {
+  settings: Entry<TypeSiteSettingsSkeleton>;
+}
 const { settings } = Astro.props;
 const year = new Date().getFullYear();
 ---

@@ -4,7 +4,9 @@ import type { Entry } from 'contentful';
 import ContactForm from '~/components/react/ContactForm';
 import ScrollReveal from '~/components/react/ScrollReveal';
 
-interface Props { settings: Entry<TypeSiteSettingsSkeleton> }
+interface Props {
+  settings: Entry<TypeSiteSettingsSkeleton>;
+}
 const { settings } = Astro.props;
 const f = settings.fields;
 const phone = f.contactPhone as string;
