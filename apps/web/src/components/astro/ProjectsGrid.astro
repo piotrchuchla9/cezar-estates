@@ -1,0 +1,22 @@
+---
+import type { TypeProjectSkeleton } from '@cezar/contentful-types';
+import type { Entry } from 'contentful';
+import ProjectCard from './ProjectCard.astro';
+
+interface Props {
+  projects: Entry<TypeProjectSkeleton>[];
+  layout: 'mosaic' | 'uniform';
+}
+const { projects, layout } = Astro.props;
+---
+{layout === 'mosaic' && projects.length >= 3 ? (
+  <div class="grid grid-cols-1 gap-3 md:grid-cols-[2fr_1fr_1fr]">
+    <ProjectCard project={projects[0]!} variant="large" />
+    <ProjectCard project={projects[1]!} />
+    <ProjectCard project={projects[2]!} />
+  </div>
+) : (
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {projects.map((p) => <ProjectCard project={p} />)}
+  </div>
+)}
