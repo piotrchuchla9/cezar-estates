@@ -4,11 +4,13 @@ import Hero from '~/components/astro/Hero.astro';
 import About from '~/components/astro/About.astro';
 import ProjectsGrid from '~/components/astro/ProjectsGrid.astro';
 import Process from '~/components/astro/Process.astro';
-import { getCompletedProjects, getSiteSettings } from '~/lib/contentful';
+import InProgressGrid from '~/components/astro/InProgressGrid.astro';
+import { getCompletedProjects, getInProgressEntries, getSiteSettings } from '~/lib/contentful';
 
-const [settings, projects] = await Promise.all([
+const [settings, projects, inProgress] = await Promise.all([
   getSiteSettings(),
   getCompletedProjects(4),
+  getInProgressEntries(3),
 ]);
 ---
 <Base seo={{
@@ -30,4 +32,5 @@ const [settings, projects] = await Promise.all([
     </div>
   </section>
   <Process settings={settings} />
+  <InProgressGrid entries={inProgress} variant="teaser" />
 </Base>
