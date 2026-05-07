@@ -5,6 +5,7 @@
       "**/dist/**",
       "**/.astro/**",
       "**/.vercel/**",
+      "**/.turbo/**",
       "**/generated.ts",
       "**/node_modules/**"
     ]
