@@ -1,0 +1,73 @@
+---
+import Base from '~/layouts/Base.astro';
+import Gallery from '~/components/react/Gallery';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { getCompletedProjects, getProjectBySlug } from '~/lib/contentful';
+
+export async function getStaticPaths() {
+  const projects = await getCompletedProjects();
+  return projects.map((p) => ({ params: { slug: p.fields.slug as string } }));
+}
+
+const { slug } = Astro.params;
+const project = await getProjectBySlug(slug!);
+if (!project) return Astro.redirect('/realizacje');
+
+const f = project.fields;
+const title = f.title as string;
+const slugStr = f.slug as string;
+const location = f.location as string;
+const year = f.year as number;
+const area = f.area as number;
+const plotArea = f.plotArea as number | undefined;
+const shortDescription = f.shortDescription as string;
+const features = (f.features as string[] | undefined) ?? [];
+const cover = f.coverImage as { fields: { file: { url: string } } };
+const coverUrl = `https:${cover.fields.file.url}?w=1600&fm=webp&q=85`;
+const galleryRaw = (f.gallery ?? []) as { fields: { file: { url: string }; title?: string } }[];
+const galleryImages = galleryRaw.map((img) => ({
+  url: `https:${img.fields.file.url}?w=800&fm=webp&q=80`,
+  alt: img.fields.title ?? title,
+}));
+const description = f.description as Parameters<typeof documentToHtmlString>[0];
+const bodyHtml = documentToHtmlString(description);
+---
+<Base seo={{
+  title,
+  description: shortDescription,
+  ogImage: coverUrl,
+  canonical: `${import.meta.env.SITE_URL}/realizacje/${slugStr}`,
+}}>
+  <article>
+    <div class="relative aspect-[16/9] w-full overflow-hidden bg-neutral-100">
+      <img src={coverUrl} alt={title} class="h-full w-full object-cover" />
+    </div>
+
+    <div class="mx-auto max-w-[var(--container-page)] px-4 py-12 md:px-10 md:py-16">
+      <a href="/realizacje" class="text-sm text-[var(--color-accent)]">← Wszystkie realizacje</a>
+      <h1 class="mt-4 text-4xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">{title}</h1>
+      <div class="mt-3 text-sm text-[var(--color-ink-muted)]">
+        {location} · {year} · {area} m²{plotArea ? ` · działka ${plotArea} m²` : ''}
+      </div>
+
+      {features.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {features.map((tag) => (
+            <li class="bg-[var(--color-accent-soft)] px-3 py-1 text-xs">{tag}</li>
+          ))}
+        </ul>
+      )}
+
+      <div class="prose prose-neutral mt-10 max-w-2xl text-[15px] leading-relaxed" set:html={bodyHtml} />
+
+      {galleryImages.length > 0 && (
+        <div class="mt-16">
+          <h2 class="text-[10px] font-semibold tracking-[3px] text-[var(--color-accent)]">GALERIA</h2>
+          <div class="mt-4">
+            <Gallery client:visible images={galleryImages} />
+          </div>
+        </div>
+      )}
+    </div>
+  </article>
+</Base>
