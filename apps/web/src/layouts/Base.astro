@@ -41,9 +41,11 @@ const jsonLd = organizationJsonLd(
     {import.meta.env.PROD && <script defer src="/_vercel/insights/script.js"></script>}
   </head>
   <body class="flex min-h-screen flex-col bg-[var(--color-bg)] text-[var(--color-ink)]">
-    <Nav settings={settings} />
-    <SmoothScroll client:load />
-    <main class="flex-1"><slot /></main>
+    <div class="mx-auto w-full max-w-[1600px] flex-1 flex flex-col">
+      <Nav settings={settings} />
+      <SmoothScroll client:load />
+      <main class="flex-1"><slot /></main>
+    </div>
     <Footer settings={settings} />
   </body>
 </html>
